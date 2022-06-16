@@ -17,13 +17,13 @@
         <label for="opt-list">Menu</label>
         <select name="option" id="opt-list">
             <option disabled selected>--- Options ---</option>
-            <option value="1">Roll Dice Once</option>
-            <option value="2">Roll Dice 5 Times</option>
-            <option value="3">Roll Dice "n" Times</option>
-            <option value="4">Roll Dice until Snake Eyes</option>
-            <option value="5">Exit</option>
+            <option value="1">1. Roll Dice Once</option>
+            <option value="2">2. Roll Dice 5 Times</option>
+            <option value="3">3. Roll Dice "n" Times</option>
+            <option value="4">4. Roll Dice until Snake Eyes</option>
+            <option value="5">5. Exit</option>
         </select>
-        <input name="nAmount" type="number" placeholder="'n' amount">
+        <input name="nAmount" type="number" placeholder="3. 'n' amount">
         <br>
         <button type="submit">Submit</button>
     </form>
