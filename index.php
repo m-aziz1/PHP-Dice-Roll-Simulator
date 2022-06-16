@@ -23,52 +23,74 @@
             <option value="4">Roll Dice until Snake Eyes</option>
             <option value="5">Exit</option>
         </select>
+        <input name="nAmount" type="number" placeholder="'n' amount">
         <br>
         <button type="submit">Submit</button>
     </form>
 
+    <p><em>first die / second die</em></p>
 </body>
 
 </html>
 
 <?php
-$responseLength = count($_GET);
+// Dice Roll Functions
 
-// $diceValues = fillArray(1, 6);
-
-// function fillArray($min, $max)
-// {
-//     $temp = [];
-//     for ($i = $min; $i <= $max; $i++) {
-//         array_push($temp, $i);
-//     }
-//     return $temp;
-// }
-
-function randomRoll($min, $max)
+// Process
+function rollUntil($n)
 {
-    $randInt = rand($min, $max);
-    echo "{$randInt}";
+    $totalRolls = [];
+    for ($i = 0; $i < $n; $i++) {
+        $die1 = rand(1, 6);
+        $die2 = rand(1, 6);
+        $sum = $die1 + $die2;
+        array_push($totalRolls, "<p>{$die1},{$die2}", "(sum: {$sum})</p>");
+    }
+
+    return $totalRolls;
+}
+
+// Split Values Array
+function echoSplitValues($anArray)
+{
+    $splitArray = implode(" ", $anArray);
+    echo "{$splitArray}";
 }
 
 // If Form Submitted
-if ($responseLength > 0) {
-    // Calculate and Output
-    extract($_GET);
+extract($_GET);
 
+if (isset($option)) {
+    // Calculate and Output
     if ($option === "1") {
-        echo "selected one";
-        echo '<script type="text/javascript">';
-        echo 'alert("Hello World!")';
-        echo '</script>';
+        $values = rollUntil(1);
+        echoSplitValues($values);
     } else if ($option === "2") {
-        echo "selected two";
+        $values = rollUntil(5);
+        echoSplitValues($values);
     } else if ($option === "3") {
-        echo "selected three";
+        if ($nAmount !== "") {
+            $values = rollUntil($nAmount);
+            echoSplitValues($values);
+        } else {
+            echo "please specify 'n'";
+        }
     } else if ($option === "4") {
-        echo "selected four";
+        $rolls = 0;
+        $snakeEyes = false;
+        while (!$snakeEyes) {
+            $die1 = rand(1, 6);
+            $die2 = rand(1, 6);
+            $sum = $die1 + $die2;
+            echo "<p>{$die1},{$die2}", "(sum: {$sum})</p>";
+            $rolls++;
+            if ($sum === 2) {
+                $snakeEyes = true;
+                echo "<p class='red'>SNAKE EYES! It took {$rolls} rolls to get snake eyes.</p>";
+            }
+        }
     } else if ($option === "5") {
-        echo "selected five";
+        header('location: ./pages/exit.php');
     }
 }
 ?>
